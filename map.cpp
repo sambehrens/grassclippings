@@ -2,6 +2,7 @@
 
 void Map::setup()
 {
+    srand ( time(NULL) );
     for (int i = 0; i < size; i++)
     {
         std::vector<Tile> row;
@@ -42,7 +43,6 @@ void Map::setup()
     { // adding wall values
         for (int ss = 0; ss < size; ss++)
         {
-            std::cout << "the random number is:  " << rand() % 11 << "\n";
             if (rand() % 11 > frequency && ss < size-1)
             {
                 symBoardMain[s][ss].right = true;
@@ -141,144 +141,113 @@ void Map::setup()
             }
         }
     }
+    int row = 0;
+    for (int y = 0; y < size*scale*2; y++)
+    {
+        std::vector<int> myVec (0);
+        boardMain.push_back(myVec);
+    }
+    for (int a = 0; a < size; a++)
+    {
+        for (int aa = 0; aa < size; aa++)
+        {
+            if (symBoardMain[a][aa].magnitude == biggest)
+            {
+                if (symBoardMain[a][aa].topedge && symBoardMain[a][aa].leftedge)
+                {
+                    std::cout << "Top left corner\n";
+                    boardMain[row].push_back(2);
+                }
+                if (symBoardMain[a][aa].topedge)
+                {
+                    std::cout << "Top edge\n";
+                    boardMain[row].push_back(2);
+                    boardMain[row].push_back(2);
+                    boardMain[row].push_back(2);
+                    boardMain[row].push_back(2);
+                }
+                if (symBoardMain[a][aa].leftedge)
+                {
+                    std::cout << "left edge\n";
+                    boardMain[row+1].push_back(2);
+                    boardMain[row+2].push_back(2);
+                    boardMain[row+3].push_back(2);
+                    boardMain[row+4].push_back(2);
+                }
 
-//    int row = 0;
-//    for (int a = 0; a < size; a++)
-//    {
-//        for (int aa = 0; aa < size; aa++)
-//        {
-//            std::cout << "magnitude:  " << symBoardMain[a][aa].magnitude << "\n";
-//            int h = 0;
-//            std::cin >> h;
-//            if (symBoardMain[a][aa].magnitude == biggest)
-//            {
-//                std::cout << "1\n";
-//                int h = 0;
-//                std::cin >> h;
-//                if (symBoardMain[a][aa].botedge && symBoardMain[a][aa].rightedge)
-//                {
-//                    std::cout << "2\n";
-//                    boardMain[row].push_back(2);
-//                    boardMain[row].push_back(2);
-//                    boardMain[row].push_back(2);
-//                    boardMain[row+1].push_back(2);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+2].push_back(2);
-//                    boardMain[row+2].push_back(0);
-//                    boardMain[row+2].push_back(0);
-//                }
-//                else if (symBoardMain[a][aa].topedge && symBoardMain[a][aa].leftedge)
-//                {
-//                    std::cout << "3\n";
-//                    boardMain[row].push_back(0);
-//                    boardMain[row].push_back(0);
-//                    boardMain[row].push_back(2);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(2);
-//                    boardMain[row+2].push_back(2);
-//                    boardMain[row+2].push_back(2);
-//                    boardMain[row+2].push_back(2);
-//                }
-//                else if (symBoardMain[a][aa].topedge && symBoardMain[a][aa].rightedge)
-//                {
-//                    boardMain[row].push_back(2);
-//                    boardMain[row].push_back(0);
-//                    boardMain[row].push_back(0);
-//                    boardMain[row+1].push_back(2);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+2].push_back(2);
-//                    boardMain[row+2].push_back(2);
-//                    boardMain[row+2].push_back(2);
-//                }
-//                else if (symBoardMain[a][aa].botedge && symBoardMain[a][aa].leftedge)
-//                {
-//                    boardMain[row].push_back(2);
-//                    boardMain[row].push_back(2);
-//                    boardMain[row].push_back(2);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(2);
-//                    boardMain[row+2].push_back(0);
-//                    boardMain[row+2].push_back(0);
-//                    boardMain[row+2].push_back(2);
-//                }
-//                else if (symBoardMain[a][aa].topedge)
-//                {
-//                    boardMain[row].push_back(0);
-//                    boardMain[row].push_back(0);
-//                    boardMain[row].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+2].push_back(2);
-//                    boardMain[row+2].push_back(2);
-//                    boardMain[row+2].push_back(2);
-//                }
-//                else if (symBoardMain[a][aa].botedge)
-//                {
-//                    boardMain[row].push_back(2);
-//                    boardMain[row].push_back(2);
-//                    boardMain[row].push_back(2);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+2].push_back(0);
-//                    boardMain[row+2].push_back(0);
-//                    boardMain[row+2].push_back(0);
-//                }
-//                else if (symBoardMain[a][aa].leftedge)
-//                {
-//                    boardMain[row].push_back(0);
-//                    boardMain[row].push_back(0);
-//                    boardMain[row].push_back(2);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(2);
-//                    boardMain[row+2].push_back(0);
-//                    boardMain[row+2].push_back(0);
-//                    boardMain[row+2].push_back(2);
-//                }
-//                else if (symBoardMain[a][aa].rightedge)
-//                {
-//                    boardMain[row].push_back(2);
-//                    boardMain[row].push_back(0);
-//                    boardMain[row].push_back(0);
-//                    boardMain[row+1].push_back(2);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+1].push_back(0);
-//                    boardMain[row+2].push_back(2);
-//                    boardMain[row+2].push_back(0);
-//                    boardMain[row+2].push_back(0);
-//                }
-//                boardMain[row].push_back(1);
-//                boardMain[row].push_back(1);
-//                boardMain[row].push_back(1);
-//                boardMain[row+1].push_back(1);
-//                boardMain[row+1].push_back(1);
-//                boardMain[row+1].push_back(1);
-//                boardMain[row+2].push_back(1);
-//                boardMain[row+2].push_back(1);
-//                boardMain[row+2].push_back(1);
-//            }
-//            else
-//            {
-//                std::cout << "completely failing" << std::endl;
-////                boardMain[row].push_back(0);
-////                boardMain[row].push_back(0);
-////                boardMain[row].push_back(0);
-////                boardMain[row+1].push_back(0);
-////                boardMain[row+1].push_back(0);
-////                boardMain[row+1].push_back(0);
-////                boardMain[row+2].push_back(0);
-////                boardMain[row+2].push_back(0);
-////                boardMain[row+2].push_back(0);
-//            }
-//        }
-//        row += scale;
-//    }
+                boardMain[row+1].push_back(1);
+                boardMain[row+1].push_back(1);
+                boardMain[row+1].push_back(1);
+                boardMain[row+2].push_back(1);
+                boardMain[row+2].push_back(1);
+                boardMain[row+2].push_back(1);
+                boardMain[row+3].push_back(1);
+                boardMain[row+3].push_back(1);
+                boardMain[row+3].push_back(1);
+
+                if (symBoardMain[a][aa].bot)
+                {
+                    std::cout << "bot\n";
+                    boardMain[row+scale+1].push_back(2);
+                    boardMain[row+scale+1].push_back(2);
+                    boardMain[row+scale+1].push_back(2);
+                }
+                else
+                {
+                    std::cout << "not bot\n";
+                    boardMain[row+scale+1].push_back(1);
+                    boardMain[row+scale+1].push_back(1);
+                    boardMain[row+scale+1].push_back(1);
+                }
+                if (symBoardMain[a][aa].right)
+                {
+                    std::cout << "right\n";
+                    boardMain[row+1].push_back(2);
+                    boardMain[row+2].push_back(2);
+                    boardMain[row+3].push_back(2);
+                }
+                else
+                {
+                    std::cout << "not right\n";
+                    boardMain[row+1].push_back(1);
+                    boardMain[row+2].push_back(1);
+                    boardMain[row+3].push_back(1);
+                }
+            }
+            else
+            {
+//                boardMain[row].push_back(0);
+//                boardMain[row].push_back(0);
+//                boardMain[row].push_back(0);
+//                boardMain[row].push_back(0);
+                boardMain[row+1].push_back(0);
+                boardMain[row+1].push_back(0);
+                boardMain[row+1].push_back(0);
+//                boardMain[row+1].push_back(0);
+                boardMain[row+2].push_back(0);
+                boardMain[row+2].push_back(0);
+                boardMain[row+2].push_back(0);
+//                boardMain[row+2].push_back(0);
+                boardMain[row+3].push_back(0);
+                boardMain[row+3].push_back(0);
+                boardMain[row+3].push_back(0);
+//                boardMain[row+3].push_back(0);
+                if (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude == biggest && symBoardMain[a][aa].right)
+                {
+                    boardMain[row+1].push_back(0);
+                    boardMain[row+2].push_back(0);
+                    boardMain[row+3].push_back(0);
+                }
+                if (!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot)
+                {
+                    boardMain[row+1].push_back(0);
+                    boardMain[row+2].push_back(0);
+                    boardMain[row+3].push_back(0);
+                }
+            }
+        }
+        row += scale+1;
+    }
 }
 
 void Map::draw()
@@ -315,6 +284,15 @@ void Map::draw()
                 yupper++;
             }
             std::cout << yupper << "\t";
+        }
+        std::cout << std::endl;
+    }
+    std::cout << "\n\n\n";
+    for (int i = 0; i < boardMain.size(); i++)
+    {
+        for (int ii = 0; ii < boardMain[i].size(); ii++)
+        {
+            std::cout << boardMain[i][ii];
         }
         std::cout << std::endl;
     }

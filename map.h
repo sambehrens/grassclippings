@@ -3,6 +3,7 @@
 #include <iostream>
 #include <vector>
 #include <stdlib.h>
+#include <time.h>
 
 class Tile
 {
@@ -29,7 +30,7 @@ public:
     void setup();
     void draw();
 
-    int size = 10;
+    int size = 5;
     int scale = 3;
     int frequency = 5;
     int biggest = 0;
