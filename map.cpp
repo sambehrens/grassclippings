@@ -240,9 +240,9 @@ void Map::setup()
                 }
                 if (!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot)
                 {
-                    boardMain[row+1].push_back(0);
-                    boardMain[row+2].push_back(0);
-                    boardMain[row+3].push_back(0);
+                    boardMain[row+4].push_back(0);
+                    boardMain[row+4].push_back(0);
+                    boardMain[row+4].push_back(0);
                 }
             }
         }
