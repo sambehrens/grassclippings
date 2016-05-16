@@ -29,9 +29,9 @@ public:
     void setup();
     void draw();
 
-    int size = 17;
-    int scale = 1;
-    float frequency = 5.5;
+    int size = 10;
+    int scale = 3;
+    int frequency = 5;
     int biggest = 0;
     std::vector< std::vector<Tile> > symBoardMain;
     std::vector< std::vector<int> > boardMain;
