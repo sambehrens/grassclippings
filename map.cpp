@@ -216,23 +216,47 @@ void Map::setup()
             }
             else
             {
-//                boardMain[row].push_back(0);
-//                boardMain[row].push_back(0);
-//                boardMain[row].push_back(0);
-//                boardMain[row].push_back(0);
+//                if (!symBoardMain[a][aa].leftedge && symBoardMain[a][aa+1].magnitude == biggest && symBoardMain[a][aa].right)
+//                {
+//                    boardMain[row+1].push_back(2);
+//                    boardMain[row+2].push_back(2);
+//                    boardMain[row+3].push_back(2);
+//                }
+                if (symBoardMain[a][aa].leftedge/* && symBoardMain[a][aa+1].magnitude != biggest*/)
+                {
+                    boardMain[row+1].push_back(0);
+                    boardMain[row+2].push_back(0);
+                    boardMain[row+3].push_back(0);
+                }
+//                if (!symBoardMain[a][aa].topedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot)
+//                {
+//                    boardMain[row+4].push_back(2);
+//                    boardMain[row+4].push_back(2);
+//                    boardMain[row+4].push_back(2);
+//                }
+                if (symBoardMain[a][aa].topedge/* || (!symBoardMain[a][aa].topedge && symBoardMain[a-1][aa].magnitude != biggest && symBoardMain[a][aa].top)*/)
+                {
+                    boardMain[row].push_back(0);
+                    boardMain[row].push_back(0);
+                    boardMain[row].push_back(0);
+                }
                 boardMain[row+1].push_back(0);
                 boardMain[row+1].push_back(0);
                 boardMain[row+1].push_back(0);
-//                boardMain[row+1].push_back(0);
                 boardMain[row+2].push_back(0);
                 boardMain[row+2].push_back(0);
                 boardMain[row+2].push_back(0);
-//                boardMain[row+2].push_back(0);
                 boardMain[row+3].push_back(0);
                 boardMain[row+3].push_back(0);
                 boardMain[row+3].push_back(0);
-//                boardMain[row+3].push_back(0);
+
                 if (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude == biggest && symBoardMain[a][aa].right)
+                {
+                    boardMain[row+1].push_back(2);
+                    boardMain[row+2].push_back(2);
+                    boardMain[row+3].push_back(2);
+                }
+                if (symBoardMain[a][aa].rightedge ||  (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude != biggest && symBoardMain[a][aa].right))
                 {
                     boardMain[row+1].push_back(0);
                     boardMain[row+2].push_back(0);
@@ -240,13 +264,19 @@ void Map::setup()
                 }
                 if (!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot)
                 {
+                    boardMain[row+4].push_back(2);
+                    boardMain[row+4].push_back(2);
+                    boardMain[row+4].push_back(2);
+                }
+                else if (symBoardMain[a][aa].bot && symBoardMain[a+1][aa].magnitude != biggest)
+                {
                     boardMain[row+4].push_back(0);
                     boardMain[row+4].push_back(0);
                     boardMain[row+4].push_back(0);
                 }
             }
         }
-        row += scale+1;
+        row += scale+2;
     }
 }
 
@@ -292,7 +322,7 @@ void Map::draw()
     {
         for (int ii = 0; ii < boardMain[i].size(); ii++)
         {
-            std::cout << boardMain[i][ii];
+            std::cout << boardMain[i][ii] << " ";
         }
         std::cout << std::endl;
     }
