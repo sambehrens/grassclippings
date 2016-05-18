@@ -31,7 +31,7 @@ public:
     void draw();
 
     int size = 5;
-    int scale = 3;
+    int scale = 2;
     int frequency = 5;
     int biggest = 0;
     std::vector< std::vector<Tile> > symBoardMain;
