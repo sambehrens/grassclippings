@@ -30,7 +30,7 @@ public:
     void setup();
     void draw();
 
-    int size = 5;
+    int size = 10;
     int scale = 2;
     int frequency = 5;
     int biggest = 0;

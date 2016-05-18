@@ -155,20 +155,18 @@ void Map::setup()
             {
                 if (symBoardMain[a][aa].topedge && symBoardMain[a][aa].leftedge)
                 {
-                    std::cout << "Top left corner\n";
                     boardMain[row].push_back(2);
                 }
                 if (symBoardMain[a][aa].topedge)
                 {
-                    std::cout << "Top edge\n";
                     boardMain[row].push_back(2);
                     boardMain[row].push_back(2);
                 }
                 if (symBoardMain[a][aa].leftedge)
                 {
-                    std::cout << "left edge\n";
                     boardMain[row+1].push_back(2);
                     boardMain[row+2].push_back(2);
+                    boardMain[row+3].push_back(2);
                 }
                 if (symBoardMain[a][aa].rightedge || symBoardMain[a][aa].topedge)
                 {
@@ -183,35 +181,50 @@ void Map::setup()
 
                 if (symBoardMain[a][aa].bot)
                 {
-                    std::cout << "bot\n";
                     boardMain[row+scale+1].push_back(2);
                     boardMain[row+scale+1].push_back(2);
                 }
                 else
                 {
-                    std::cout << "not bot\n";
                     boardMain[row+scale+1].push_back(1);
                     boardMain[row+scale+1].push_back(1);
                 }
                 if (symBoardMain[a][aa].right)
                 {
-                    std::cout << "right\n";
                     boardMain[row+1].push_back(2);
                     boardMain[row+2].push_back(2);
                 }
                 else
                 {
-                    std::cout << "not right\n";
                     boardMain[row+1].push_back(1);
                     boardMain[row+2].push_back(1);
                 }
+                if (symBoardMain[a][aa].bot || symBoardMain[a][aa].right || (!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a+1][aa].right) || (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude == biggest && symBoardMain[a][aa+1].bot))
+                {
+                    boardMain[row+scale+1].push_back(2);
+                }
+                else
+                {
+                    boardMain[row+scale+1].push_back(1);
+                }
             }
-            else
+            else // if the current tile is not in the biggest room
             {
+                if (symBoardMain[a][aa].topedge && symBoardMain[a][aa].leftedge)
+                {
+                    boardMain[row].push_back(0);
+                }
                 if (symBoardMain[a][aa].leftedge)
                 {
                     boardMain[row+1].push_back(0);
                     boardMain[row+2].push_back(0);
+                    if (!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot){
+                        boardMain[row+scale+1].push_back(2);
+                    }
+                    else
+                    {
+                        boardMain[row+scale+1].push_back(0);
+                    }
                 }
                 if (symBoardMain[a][aa].topedge)
                 {
@@ -222,31 +235,46 @@ void Map::setup()
                 {
                     boardMain[row].push_back(0);
                 }
+
                 boardMain[row+1].push_back(0);
                 boardMain[row+1].push_back(0);
+//                boardMain[row+1].push_back(0);
 
                 boardMain[row+2].push_back(0);
                 boardMain[row+2].push_back(0);
+//                boardMain[row+2].push_back(0);
+//
+//                boardMain[row+3].push_back(0);
+//                boardMain[row+3].push_back(0);
+//                boardMain[row+3].push_back(0);
 
                 if (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude == biggest && symBoardMain[a][aa].right)
                 {
                     boardMain[row+1].push_back(2);
                     boardMain[row+2].push_back(2);
                 }
-                if (symBoardMain[a][aa].rightedge ||  (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude != biggest && symBoardMain[a][aa].right))
+                else /*if (symBoardMain[a][aa].rightedge ||  (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude != biggest && symBoardMain[a][aa].right))*/
                 {
                     boardMain[row+1].push_back(0);
                     boardMain[row+2].push_back(0);
                 }
                 if (!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot)
                 {
-                    boardMain[row+3].push_back(2);
-                    boardMain[row+3].push_back(2);
+                    boardMain[row+scale+1].push_back(2);
+                    boardMain[row+scale+1].push_back(2);
                 }
-                else if (!symBoardMain[a][aa].botedge && symBoardMain[a][aa].bot && symBoardMain[a+1][aa].magnitude != biggest)
+                else /*if (!symBoardMain[a][aa].botedge && symBoardMain[a][aa].bot && symBoardMain[a+1][aa].magnitude != biggest)*/
                 {
-                    boardMain[row+3].push_back(0);
-                    boardMain[row+3].push_back(0);
+                    boardMain[row+scale+1].push_back(0);
+                    boardMain[row+scale+1].push_back(0);
+                }
+                if ((!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot) || (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude == biggest && symBoardMain[a][aa].right))
+                {
+                    boardMain[row+scale+1].push_back(2);
+                }
+                else/* if ((symBoardMain[a][aa].rightedge ||  (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude != biggest && symBoardMain[a][aa].right)) || (symBoardMain[a][aa].rightedge ||  (!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude != biggest && symBoardMain[a][aa].bot)))*/
+                {
+                    boardMain[row+scale+1].push_back(0);
                 }
             }
         }
@@ -294,9 +322,27 @@ void Map::draw()
     std::cout << "\n\n\n";
     for (int i = 0; i < boardMain.size(); i++)
     {
+        std::cout << "\t\t";
         for (int ii = 0; ii < boardMain[i].size(); ii++)
         {
-            std::cout << boardMain[i][ii] << " ";
+            char output;
+            if (boardMain[i][ii] == 1)
+            {
+                output = ':';
+            }
+            else if (boardMain[i][ii] == 2)
+            {
+                output = '#';
+            }
+            else if (boardMain[i][ii] == 0)
+            {
+                output = '.';
+            }
+            else
+            {
+                output = '?';
+            }
+            std::cout << output << " ";
         }
         std::cout << std::endl;
     }
