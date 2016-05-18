@@ -142,7 +142,7 @@ void Map::setup()
         }
     }
     int row = 0;
-    for (int y = 0; y < size*scale*2; y++)
+    for (int y = 0; y < size*(scale+1)+1; y++)
     {
         std::vector<int> myVec (0);
         boardMain.push_back(myVec);
@@ -159,45 +159,58 @@ void Map::setup()
                 }
                 if (symBoardMain[a][aa].topedge)
                 {
-                    boardMain[row].push_back(2);
-                    boardMain[row].push_back(2);
+                    for (int t = 0; t < scale; t++)
+                    {
+                        boardMain[row].push_back(2);
+                    }
                 }
                 if (symBoardMain[a][aa].leftedge)
                 {
-                    boardMain[row+1].push_back(2);
-                    boardMain[row+2].push_back(2);
-                    boardMain[row+3].push_back(2);
+                    for (int t = 1; t <= scale+1; t++)
+                    {
+                        boardMain[row+t].push_back(2);
+                    }
                 }
                 if (symBoardMain[a][aa].rightedge || symBoardMain[a][aa].topedge)
                 {
                     boardMain[row].push_back(2);
                 }
 
-                boardMain[row+1].push_back(1);
-                boardMain[row+1].push_back(1);
-
-                boardMain[row+2].push_back(1);
-                boardMain[row+2].push_back(1);
+                for (int t = 1; t <= scale; t++)
+                {
+                    for (int tt = 0; tt < scale; tt++)
+                    {
+                        boardMain[row+t].push_back(1);
+                    }
+                }
 
                 if (symBoardMain[a][aa].bot)
                 {
-                    boardMain[row+scale+1].push_back(2);
-                    boardMain[row+scale+1].push_back(2);
+                    for (int t = 0; t < scale; t++)
+                    {
+                        boardMain[row+scale+1].push_back(2);
+                    }
                 }
                 else
                 {
-                    boardMain[row+scale+1].push_back(1);
-                    boardMain[row+scale+1].push_back(1);
+                    for (int t = 0; t < scale; t++)
+                    {
+                        boardMain[row+scale+1].push_back(1);
+                    }
                 }
                 if (symBoardMain[a][aa].right)
                 {
-                    boardMain[row+1].push_back(2);
-                    boardMain[row+2].push_back(2);
+                    for (int t = 1; t <= scale; t++)
+                    {
+                        boardMain[row+t].push_back(2);
+                    }
                 }
                 else
                 {
-                    boardMain[row+1].push_back(1);
-                    boardMain[row+2].push_back(1);
+                    for (int t = 1; t <= scale; t++)
+                    {
+                        boardMain[row+t].push_back(1);
+                    }
                 }
                 if (symBoardMain[a][aa].bot || symBoardMain[a][aa].right || (!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a+1][aa].right) || (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude == biggest && symBoardMain[a][aa+1].bot))
                 {
@@ -216,8 +229,11 @@ void Map::setup()
                 }
                 if (symBoardMain[a][aa].leftedge)
                 {
-                    boardMain[row+1].push_back(0);
-                    boardMain[row+2].push_back(0);
+                    for (int t = 1; t <= scale; t++)
+                    {
+                        boardMain[row+t].push_back(0);
+                    }
+
                     if (!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot){
                         boardMain[row+scale+1].push_back(2);
                     }
@@ -228,47 +244,60 @@ void Map::setup()
                 }
                 if (symBoardMain[a][aa].topedge)
                 {
-                    boardMain[row].push_back(0);
-                    boardMain[row].push_back(0);
+                    for (int t = 0; t < scale; t++)
+                    {
+                        boardMain[row].push_back(0);
+                    }
                 }
                 if (symBoardMain[a][aa].rightedge || symBoardMain[a][aa].topedge)
                 {
-                    boardMain[row].push_back(0);
+                    if (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa].right && symBoardMain[a][aa+1].magnitude == biggest)
+                    {
+                        boardMain[row].push_back(2);
+                    }
+                    else
+                    {
+                        boardMain[row].push_back(0);
+                    }
                 }
 
-                boardMain[row+1].push_back(0);
-                boardMain[row+1].push_back(0);
-//                boardMain[row+1].push_back(0);
-
-                boardMain[row+2].push_back(0);
-                boardMain[row+2].push_back(0);
-//                boardMain[row+2].push_back(0);
-//
-//                boardMain[row+3].push_back(0);
-//                boardMain[row+3].push_back(0);
-//                boardMain[row+3].push_back(0);
+                for (int t = 1; t <= scale; t++)
+                {
+                    for (int tt = 0; tt < scale; tt++)
+                    {
+                        boardMain[row+t].push_back(0);
+                    }
+                }
 
                 if (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude == biggest && symBoardMain[a][aa].right)
                 {
-                    boardMain[row+1].push_back(2);
-                    boardMain[row+2].push_back(2);
+                    for (int t = 1; t <= scale; t++)
+                    {
+                        boardMain[row+t].push_back(2);
+                    }
                 }
                 else /*if (symBoardMain[a][aa].rightedge ||  (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude != biggest && symBoardMain[a][aa].right))*/
                 {
-                    boardMain[row+1].push_back(0);
-                    boardMain[row+2].push_back(0);
+                    for (int t = 1; t <= scale; t++)
+                    {
+                        boardMain[row+t].push_back(0);
+                    }
                 }
                 if (!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot)
                 {
-                    boardMain[row+scale+1].push_back(2);
-                    boardMain[row+scale+1].push_back(2);
+                    for (int t = 0; t < scale; t++)
+                    {
+                        boardMain[row+scale+1].push_back(2);
+                    }
                 }
                 else /*if (!symBoardMain[a][aa].botedge && symBoardMain[a][aa].bot && symBoardMain[a+1][aa].magnitude != biggest)*/
                 {
-                    boardMain[row+scale+1].push_back(0);
-                    boardMain[row+scale+1].push_back(0);
+                    for (int t = 0; t < scale; t++)
+                    {
+                        boardMain[row+scale+1].push_back(0);
+                    }
                 }
-                if ((!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot) || (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude == biggest && symBoardMain[a][aa].right))
+                if ((!symBoardMain[a][aa].botedge && symBoardMain[a+1][aa].magnitude == biggest && symBoardMain[a][aa].bot) || (!symBoardMain[a][aa].rightedge && symBoardMain[a][aa+1].magnitude == biggest && symBoardMain[a][aa].right) || (!symBoardMain[a][aa].botedge && !symBoardMain[a][aa].rightedge && symBoardMain[a+1][aa+1].magnitude == biggest))
                 {
                     boardMain[row+scale+1].push_back(2);
                 }
@@ -279,6 +308,14 @@ void Map::setup()
             }
         }
         row += scale+1;
+    }
+    for (int hard = 0; hard < boardMain.size(); hard++)
+    {
+        while (boardMain[hard].size() != (scale+1)*size+1)
+        {
+            boardMain[hard].erase(boardMain[hard].begin() + boardMain[hard].size()-1);
+            std::cout << "caught " << hard << std::endl;
+        }
     }
 }
 
@@ -322,13 +359,13 @@ void Map::draw()
     std::cout << "\n\n\n";
     for (int i = 0; i < boardMain.size(); i++)
     {
-        std::cout << "\t\t";
+        std::cout << "\t";
         for (int ii = 0; ii < boardMain[i].size(); ii++)
         {
             char output;
             if (boardMain[i][ii] == 1)
             {
-                output = ':';
+                output = ' ';
             }
             else if (boardMain[i][ii] == 2)
             {

@@ -32,7 +32,7 @@ public:
 
     int size = 10;
     int scale = 2;
-    int frequency = 5;
+    int frequency = 4;
     int biggest = 0;
     std::vector< std::vector<Tile> > symBoardMain;
     std::vector< std::vector<int> > boardMain;
