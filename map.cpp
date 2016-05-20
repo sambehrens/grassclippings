@@ -125,7 +125,6 @@ void Map::setup()
                             if (visited.size() > biggest)
                             {
                                 biggest = visited.size();
-                                std::cout << "setting bigest to: " << biggest << "\n";
 //                                int rando1 = Random.Range(0,visitedx.size-1);
 //                                player1.transform.position = new Vector3(visitedx[rando1] * increment, player1.transform.position.y, visitedy[rando1] * increment);
 //                                int rando2 = Random.Range(0,visitedx.size-1);
@@ -314,22 +313,12 @@ void Map::setup()
         while (boardMain[hard].size() != (scale+1)*size+1)
         {
             boardMain[hard].erase(boardMain[hard].begin() + boardMain[hard].size()-1);
-            std::cout << "caught " << hard << std::endl;
         }
     }
 }
 
 void Map::draw()
 {
-    std::cout << "biggest: " << biggest << "\n";
-    for (int i = 0; i < size; i++)
-    {
-        for (int ii = 0; ii < size; ii++)
-        {
-            std::cout << symBoardMain[i][ii].magnitude << "\t";
-        }
-        std::cout << std::endl;
-    }
     std::cout << "\n\n\n";
     for (int i = 0; i < size; i++)
     {
